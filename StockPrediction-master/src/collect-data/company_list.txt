@@ -1,0 +1,3 @@
+Apple:n:2013-11-21
+Microsoft:y:2013-11-25
+Google:n:2013-11-01

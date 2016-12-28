@@ -76,7 +76,7 @@ def getFeatureList(fileName):
 def extract_features(tweet):
     tweet_words = set(tweet)
     features = {}
-    for word in featureList:
+    for word in features:
         features['contains(%s)' % word] = (word in tweet_words)
     return features
 #end

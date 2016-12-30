@@ -38,8 +38,11 @@ for letter in letter_list:
     letter_url = 'http://www.footballdb.com' + letter
     player(letter_url)
 
-
-
 print(player_links)
 
 print(len(player_links))
+
+for player_link in player_links:
+    player_url = 'http://www.footballdb.com' + player_link + '/stats'
+    br.open(player_url)
+    soup = BeautifulSoup(str(br.select), "html.parser")

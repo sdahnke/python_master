@@ -46,3 +46,4 @@ for player_link in player_links:
     player_url = 'http://www.footballdb.com' + player_link + '/stats'
     br.open(player_url)
     soup = BeautifulSoup(str(br.select), "html.parser")
+    print(soup)

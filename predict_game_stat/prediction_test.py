@@ -22,12 +22,12 @@ stat_file["wind_mph"] = stat_file["wind_mph"].fillna(stat_file["wind_mph"].media
 stat_file.loc[stat_file["home_score"] > stat_file["away_score"], "home_win"] = 1
 stat_file.loc[stat_file["home_score"] <= stat_file["away_score"], "home_win"] = 0
 
-print(stat_file.head(10))
-print("")
+# print(stat_file.head(10))
 
 # replace team names with ids
-data = stat_file()
-
+data = ["home_team", "away_team"]
+dummy_values = stat_file.get_dummies(columns=data)
+print(dummy_values)
 
 # columns to predict the target
 predictors = ["temperature", "wind_chill", "humidity", "wind_mph"]
@@ -62,4 +62,4 @@ predictions[predictions <= .5] = 0
 # calc accuracy
 accuracy = sum(predictions[predictions == stat_file["home_win"]]) / len(predictions)
 
-print(accuracy)
+print("Die Genauigkeit der Linearen Regression entspricht : " + str(round(accuracy * 100, 3)) + " %")

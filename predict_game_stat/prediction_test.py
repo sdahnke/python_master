@@ -39,7 +39,7 @@ kf = KFold(stat_file.shape[0], n_folds=5000, random_state=1)
 
 predictions = []
 for train, test in kf:
-    # predictors we're using the train the algorithm.  Note how we only take the rows in the train folds.
+    # predictors we're using the train the algorithm -> Note how we only take the rows in the train folds.
     train_predictors = (stat_frame[predictors].iloc[train, :])
     # target we're using to train the algorithm
     train_target = stat_frame["home_win"].iloc[train]

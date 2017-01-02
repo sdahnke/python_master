@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas
 from sklearn.cross_validation import KFold
@@ -34,9 +33,9 @@ predictors = list(header_frame.columns.values)
 # init algorithm class
 alg = LinearRegression()
 
-# generate cross validation folds for the stat_file dataset.  It return the row indices corresponding to train and test.
+# generate cross validation folds for the dataset.  It return the row indices corresponding to train and test.
 # set random_state to ensure we get the same splits every time we run this.
-kf = KFold(stat_file.shape[0], n_folds=3, random_state=1)
+kf = KFold(stat_file.shape[0], n_folds=3, random_state=0)
 
 predictions = []
 for train, test in kf:
@@ -62,14 +61,13 @@ predictions[predictions <= .5] = 0
 accuracy = sum(predictions[predictions == stat_frame["home_win"]]) / len(predictions)
 
 print("Die Genauigkeit der Linearen Regression entspricht : " + str(round(accuracy * 100, 3)) + " %")
-print(train)
-print(test)
 
-y = stat_file["home_win"]
+# y = stat_frame["home_win"]
+# x = predictions
 
-ax = plt.subplot()
-ax.scatter(y, predictions)
-ax.plot([y.min(), y.max()], [y.min(), y.max()], 'k--', lw=4)
-ax.set_xlabel('Measured')
-ax.set_ylabel('Predicted')
-plt.show()
+# ax = plt.subplot()
+# ax.scatter(y, x)
+# ax.plot([y.min(), y.max()], [x.min(), x.max()], 'k--', lw=4)
+# ax.set_xlabel('Measured')
+# ax.set_ylabel('Predicted')
+# plt.show()

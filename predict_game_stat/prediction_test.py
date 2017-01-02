@@ -15,8 +15,8 @@ stat_file["humidity"] = stat_file["humidity"].fillna(stat_file["humidity"].media
 stat_file["wind_mph"] = stat_file["wind_mph"].fillna(stat_file["wind_mph"].median())
 
 # add column home_win
-stat_file.loc[stat_file["home_score"] > stat_file["away_score"], "home_win"] = 1
-stat_file.loc[stat_file["home_score"] <= stat_file["away_score"], "home_win"] = 0
+stat_file.loc[stat_file["home_score"] >= stat_file["away_score"], "home_win"] = 1
+stat_file.loc[stat_file["home_score"] < stat_file["away_score"], "home_win"] = 0
 
 
 # replace team names with dummy_ids
@@ -35,7 +35,7 @@ alg = LinearRegression()
 
 # generate cross validation folds for the dataset.  It return the row indices corresponding to train and test.
 # set random_state to ensure we get the same splits every time we run this.
-kf = KFold(stat_file.shape[0], n_folds=3, random_state=1)
+kf = KFold(stat_file.shape[0], n_folds=5, random_state=1)
 
 predictions = []
 for train, test in kf:

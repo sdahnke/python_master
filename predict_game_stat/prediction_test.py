@@ -35,7 +35,7 @@ alg = LinearRegression()
 
 # generate cross validation folds for the stat_file dataset.  It return the row indices corresponding to train and test.
 # set random_state to ensure we get the same splits every time we run this.
-kf = KFold(stat_file.shape[0], n_folds=1000, random_state=5)
+kf = KFold(stat_file.shape[0], n_folds=5000, random_state=1)
 
 predictions = []
 for train, test in kf:
@@ -61,3 +61,5 @@ predictions[predictions <= .5] = 0
 accuracy = sum(predictions[predictions == stat_frame["home_win"]]) / len(predictions)
 
 print("Die Genauigkeit der Linearen Regression entspricht : " + str(round(accuracy * 100, 3)) + " %")
+print(train)
+print(test)

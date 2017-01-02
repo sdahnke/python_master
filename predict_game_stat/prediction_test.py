@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas
 from sklearn.cross_validation import KFold
@@ -22,19 +23,20 @@ stat_file.loc[stat_file["home_score"] <= stat_file["away_score"], "home_win"] = 
 # replace team names with dummy_ids
 string_data = ["home_team", "away_team"]
 stat_frame = pandas.get_dummies(stat_file, columns=string_data)
+header_frame = pandas.get_dummies(stat_file, columns=string_data)
 
 # delete columns
-stat_frame.drop(stat_frame.columns[[0, 1, 2, 7, 8]], axis=1, inplace=True)
+header_frame.drop(stat_frame.columns[[0, 1, 2, 7, 8, 9]], axis=1, inplace=True)
 
 # columns to predict the target
-predictors = list(stat_frame.columns.values)
+predictors = list(header_frame.columns.values)
 
 # init algorithm class
 alg = LinearRegression()
 
 # generate cross validation folds for the stat_file dataset.  It return the row indices corresponding to train and test.
 # set random_state to ensure we get the same splits every time we run this.
-kf = KFold(stat_file.shape[0], n_folds=3, random_state=1)
+kf = KFold(stat_file.shape[0], n_folds=1000, random_state=5)
 
 predictions = []
 for train, test in kf:
@@ -60,3 +62,7 @@ predictions[predictions <= .5] = 0
 accuracy = sum(predictions[predictions == stat_frame["home_win"]]) / len(predictions)
 
 print("Die Genauigkeit der Linearen Regression entspricht : " + str(round(accuracy * 100, 3)) + " %")
+
+std_error = scores_std / np.sqrt(n_folds)
+
+plt.semilogx()

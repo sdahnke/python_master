@@ -24,10 +24,13 @@ stat_file.loc[stat_file["home_score"] <= stat_file["away_score"], "home_win"] = 
 
 # print(stat_file.head(10))
 
-# replace team names with ids
-data = ["home_team", "away_team"]
-dummy_values = stat_file.get_dummies(columns=data)
-print(dummy_values)
+# replace team names with dummy_ids
+string_data = ["home_team", "away_team"]
+dummy_ids = pandas.get_dummies(stat_file, columns=string_data)
+print(dummy_ids.describe())
+
+
+
 
 # columns to predict the target
 predictors = ["temperature", "wind_chill", "humidity", "wind_mph"]

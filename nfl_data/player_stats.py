@@ -1,6 +1,7 @@
-from robobrowser.browser import RoboBrowser
-from bs4 import BeautifulSoup
 import re
+
+from bs4 import BeautifulSoup
+from robobrowser.browser import RoboBrowser
 
 player_links = []
 letter_list = []
@@ -20,6 +21,7 @@ def player(url):
         link = row.find('a', href=True)
         link = link['href']
         player_links.append(link)
+
 
 # catch A side player
 player(url)

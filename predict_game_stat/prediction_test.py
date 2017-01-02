@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas
 from sklearn.cross_validation import KFold
@@ -62,7 +61,3 @@ predictions[predictions <= .5] = 0
 accuracy = sum(predictions[predictions == stat_frame["home_win"]]) / len(predictions)
 
 print("Die Genauigkeit der Linearen Regression entspricht : " + str(round(accuracy * 100, 3)) + " %")
-
-std_error = scores_std / np.sqrt(n_folds)
-
-plt.semilogx()

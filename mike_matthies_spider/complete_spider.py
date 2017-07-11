@@ -1,7 +1,6 @@
 import csv
 import re
 import time
-
 from bs4 import BeautifulSoup
 from robobrowser import RoboBrowser
 
@@ -41,21 +40,19 @@ def matthieslogin(url):
 
 matthieslogin(url)
 
-soup = BeautifulSoup(str(br.select), "html.parser")
+soup = BeautifulSoup(str(br.select), "lxml")
 
-selected_cat = soup.find("div", {"class": "cat-item  tree active selected spez"})
-
-category_links = selected_cat.find_all('a', href=True)
+category_links = soup.find_all('a', href=True)
 
 # sammle Kategorie-Links
 for category_link in category_links:
-    if re.search(".*", str(category_link)):
+    if re.search(".*Enduro.*", str(category_link)):
         print(str(category_link['href']))
         category_list.append(str(category_link['href']))
 
         # öffne Kategorie-Links mit Login!
         br.open(str(category_link['href']))
-        soup = BeautifulSoup(str(br.select), "html.parser")
+        soup = BeautifulSoup(str(br.select), "lxml")
         site_links = soup.find_all('a')
         category_list_t = [0]
         for site_link in site_links:
@@ -80,7 +77,7 @@ for prod_site in every_prod_site:
     # print(prod_site)
     br.open(str(prod_site))
     time.sleep(1)
-    soup = BeautifulSoup(str(br.select), "html.parser")
+    soup = BeautifulSoup(str(br.select), "lxml")
     prod_links = soup.find_all('a')
     for prod_link in prod_links:
         if re.match(".*article.*", str(prod_link)):
@@ -100,7 +97,7 @@ for prod_link in prod_link_list:
     except:
         print("ERROR: ! can not open " + str(prod_link))
 
-    soup = BeautifulSoup(str(br.select), "html.parser")
+    soup = BeautifulSoup(str(br.select), "lxml")
     # print(soup.prettify())
 
     try:

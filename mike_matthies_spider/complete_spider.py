@@ -1,10 +1,11 @@
-import re
-from robobrowser import RoboBrowser
-from bs4 import BeautifulSoup
-import time
 import csv
+import re
+import time
 
-url = "http://mike.matthies.de/de/category/10402000000/"
+from bs4 import BeautifulSoup
+from robobrowser import RoboBrowser
+
+url = "http://mike.matthies.de/de/category/10208000000/"
 
 br = RoboBrowser(history=False)
 
@@ -23,7 +24,7 @@ bez_list = list()
 pic_list = list()
 car_list = list()
 
-csv_name = 'matthies_prod_kolben' + '.csv'
+csv_name = 'cross_enduro_matthies'
 
 
 # Login-Funktion implementieren
@@ -42,11 +43,13 @@ matthieslogin(url)
 
 soup = BeautifulSoup(str(br.select), "html.parser")
 
-category_links = soup.find_all('a', href=True)
+selected_cat = soup.find("div", {"class": "cat-item  tree active selected spez"})
+
+category_links = selected_cat.find_all('a', href=True)
 
 # sammle Kategorie-Links
 for category_link in category_links:
-    if re.search(".*Kolben.*", str(category_link)):
+    if re.search(".*", str(category_link)):
         print(str(category_link['href']))
         category_list.append(str(category_link['href']))
 
@@ -162,6 +165,11 @@ for prod_link in prod_link_list:
     except:
         fahrzeug = "cant not find mobil_table"
         print(fahrzeug)
+
+    try:
+        br.submit_form(form, submit='NameOfTheButton')
+    except:
+        print("not able to add product to basket")
 
     try:
         with open(str(csv_name), 'a', newline='') as csvfile:

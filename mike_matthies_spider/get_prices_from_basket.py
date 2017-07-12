@@ -1,6 +1,5 @@
-import csv
 import re
-import time
+
 from bs4 import BeautifulSoup
 from robobrowser import RoboBrowser
 
@@ -27,18 +26,23 @@ basket_table = soup.find('table', attrs={'class':'tx_nbbasket'})
 data = []
 
 rows = basket_table.find_all('tr')
-#print(rows)
+# print(rows)
 for row in rows:
     cols = row.find_all('td')
-    cols = [ele.text.strip() for ele in cols]
-    if re.match("716\u200977\u200994#w1wkg", cols):
-        print("convert to matthies_id")
-    if re.match("€\xa020,00", cols):
-        print("convert to number")
+    for ele in cols:
+        cols = ele.text.strip()
+        if re.match("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", str(cols)):
+            search = re.search("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cols)
+            cols = search.group(1) + "." + search.group(2) + "." + search.group(3)
+            print(cols)
+        if re.match("[^0-9]+([0-9,]+)", str(cols)):
+            search = re.search("[^0-9]+([0-9,]+)", cols)
+            cols = search.group(1)
+            print(cols)
+        new_row = [ele for ele in cols if ele]
+        if re.match("\[\'[0-9]+\'.*", str(new_row)):
+            data.append(new_row)
+            print(data)
 
-    new_row = [ele for ele in cols if ele]
-    if re.match("\[\'[0-9]+\'.*", str(new_row)):
-        print(new_row)
-        data.append(new_row)
 
 # Warenkorb leeren

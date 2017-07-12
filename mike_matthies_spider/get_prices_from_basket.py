@@ -31,6 +31,9 @@ rows = basket_table.find_all('tr')
 for row in rows:
     cols = row.find_all('td')
     cols = [ele.text.strip() for ele in cols]
-    data.append([ele for ele in cols if ele])
+    new_row = [ele for ele in cols if ele]
+    if re.match("\[\'[0-9]+\'.*", str(new_row)):
+        print(new_row)
+        data.append(new_row)
 
-print(data)
+# Warenkorb leeren

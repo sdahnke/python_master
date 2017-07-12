@@ -31,6 +31,10 @@ rows = basket_table.find_all('tr')
 for row in rows:
     cols = row.find_all('td')
     cols = [ele.text.strip() for ele in cols]
+    if re.match("716\u200977\u200994#w1wkg", cols):
+        print("convert to matthies_id")
+    if re.match("€\xa020,00", cols):
+        print("convert to number")
     new_row = [ele for ele in cols if ele]
     if re.match("\[\'[0-9]+\'.*", str(new_row)):
         print(new_row)

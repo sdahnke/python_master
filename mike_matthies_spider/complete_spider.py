@@ -23,7 +23,7 @@ bez_list = list()
 pic_list = list()
 car_list = list()
 
-csv_name = 'cross_enduro_matthies'
+csv_name = 'cross_enduro_matthies.csv'
 
 
 # Login-Funktion implementieren
@@ -32,8 +32,6 @@ def matthieslogin(url):
     form = br.get_form(id='quicklogin')
     form["mcustno"] = login_name
     form["mpassword"] = login_pw
-    # Formular ausgeben
-    # print(form)
     br.session.headers["Referer"] = url
     br.submit_form(form)
 
@@ -43,6 +41,8 @@ matthieslogin(url)
 soup = BeautifulSoup(str(br.select), "lxml")
 
 category_links = soup.find_all('a', href=True)
+
+category_links = list(set(category_links))
 
 # sammle Kategorie-Links
 for category_link in category_links:
@@ -54,6 +54,7 @@ for category_link in category_links:
         br.open(str(category_link['href']))
         soup = BeautifulSoup(str(br.select), "lxml")
         site_links = soup.find_all('a')
+        site_links = list(set(site_links))
         category_list_t = [0]
         for site_link in site_links:
             if re.search(".*sr=.*", str(site_link)):
@@ -62,7 +63,7 @@ for category_link in category_links:
                 category_list_t.append(int(number_str.group(1)))
 
         # int(max(category_list_t))
-        print(int(max(category_list_t)))
+        # print(int(max(category_list_t)))
 
         n = 0
 
@@ -82,7 +83,7 @@ for prod_site in every_prod_site:
     for prod_link in prod_links:
         if re.match(".*article.*", str(prod_link)):
             prod_link_list.append(prod_link['href'])
-            print(prod_link['href'])
+            #print(prod_link['href'])
 
 prod_link_list = list(set(prod_link_list))
 
@@ -164,7 +165,12 @@ for prod_link in prod_link_list:
         print(fahrzeug)
 
     try:
-        br.submit_form(form, submit='NameOfTheButton')
+        forms = br.get_forms()
+        for form in forms:
+            if re.match('.*area_id=6.*', str(form)):
+                # jjmnr = re.match('.*jjmnr = ([0 - 9\.] * ).*', form).group(1)
+                # print(jjmnr)
+                br.submit_form(form)
     except:
         print("not able to add product to basket")
 

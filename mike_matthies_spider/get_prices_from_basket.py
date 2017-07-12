@@ -35,6 +35,7 @@ for row in rows:
         print("convert to matthies_id")
     if re.match("€\xa020,00", cols):
         print("convert to number")
+
     new_row = [ele for ele in cols if ele]
     if re.match("\[\'[0-9]+\'.*", str(new_row)):
         print(new_row)

@@ -30,14 +30,16 @@ rows = basket_table.find_all('tr')
 # print(rows)
 for row in rows:
     cells = row.find_all('td')
+    #print(cells)
     if len(cells) > 0:
         position = cells[1].text.strip()
-        attr1 = cells[2].text.strip()
-        attr2 = cells[3].text.strip()
-        attr3 = cells[4].text.strip()
+        print(position)
+    #    attr1 = cells[2].text.strip()
+    #    attr2 = cells[3].text.strip()
+    #    attr3 = cells[4].text.strip()
 
-        product_price = {position, attr1, attr2, attr3}
-        basket.append(product_price)
+    #    product_price = {position, attr1, attr2, attr3}
+    #    basket.append(product_price)
 
 print(basket)
 

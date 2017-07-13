@@ -20,3 +20,20 @@ if re.match("([0-9]{3})\\u2009([0-9]{2})\\u2009([0-9]{2})#w1wkg", test_text):
         print(cols)
     else:
         cols = cols
+
+
+
+cols = row.find_all('td')
+    print(cols)
+    for ele in cols:
+        cols = ele.text.strip()
+        if re.match("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", str(cols)):
+            search = re.search("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cols)
+            cols = search.group(1) + "." + search.group(2) + "." + search.group(3)
+        if re.match("[^0-9]+([0-9,]+)", str(cols)):
+            search = re.search("[^0-9]+([0-9,]+)", cols)
+            cols = search.group(1)
+        new_row = [ele for ele in cols if ele]
+        if re.match("\[\'[0-9]+\'.*", str(new_row)):
+            data.append(new_row)
+            print(data)

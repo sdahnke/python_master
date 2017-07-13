@@ -24,25 +24,22 @@ basket_table = soup.find('table', attrs={'class':'tx_nbbasket'})
 # print(basket_body)
 
 data = []
+basket = []
 
 rows = basket_table.find_all('tr')
 # print(rows)
 for row in rows:
-    cols = row.find_all('td')
-    for ele in cols:
-        cols = ele.text.strip()
-        if re.match("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", str(cols)):
-            search = re.search("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cols)
-            cols = search.group(1) + "." + search.group(2) + "." + search.group(3)
-            print(cols)
-        if re.match("[^0-9]+([0-9,]+)", str(cols)):
-            search = re.search("[^0-9]+([0-9,]+)", cols)
-            cols = search.group(1)
-            print(cols)
-        new_row = [ele for ele in cols if ele]
-        if re.match("\[\'[0-9]+\'.*", str(new_row)):
-            data.append(new_row)
-            print(data)
+    cells = row.find_all('td')
+    if len(cells) > 0:
+        position = cells[1].text.strip()
+        attr1 = cells[2].text.strip()
+        attr2 = cells[3].text.strip()
+        attr3 = cells[4].text.strip()
+
+        product_price = {position, attr1, attr2, attr3}
+        basket.append(product_price)
+
+print(basket)
 
 
 # Warenkorb leeren

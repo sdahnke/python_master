@@ -36,8 +36,11 @@ for row in rows:
             search = re.search("[^0-9]+([0-9,]+)", cell)
             cell = search.group(1)
         basket_products.append(cell)
-    basket.append(basket)
+    print(str(basket_products))
+    if re.match("\[\'[0-9]+\',.*", str(basket_products)):
+        basket.append(basket)
     basket_products = []
+print(basket)
 
 
 # Warenkorb leeren

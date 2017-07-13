@@ -40,6 +40,7 @@ for row in rows:
     if re.match("\[\'[0-9]+\',.*", str(basket_products)):
         basket.append(basket)
     basket_products = []
+
 print(basket)
 
 

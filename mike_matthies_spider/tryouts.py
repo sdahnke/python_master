@@ -37,3 +37,21 @@ cols = row.find_all('td')
         if re.match("\[\'[0-9]+\'.*", str(new_row)):
             data.append(new_row)
             print(data)
+
+or row in rows:
+cells = row.find_all('td')
+for cell in cells:
+    cell = str(cell.text.strip())
+    if re.match("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cell):
+        search = re.search("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cell)
+        cell = search.group(1) + "." + search.group(2) + "." + search.group(3)
+    if re.match("[^0-9]+([0-9,]+)", cell):
+        search = re.search("[^0-9]+([0-9,]+)", cell)
+        cell = search.group(1)
+    basket_products.append(cell)
+if re.match("\[\'[0-9]+\',.*", str(basket_products)):
+    print(str(basket_products))
+    basket.append(basket)
+basket_products = []
+
+print(basket)

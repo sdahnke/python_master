@@ -27,21 +27,37 @@ basket_table = soup.find('table', attrs={'class':'tx_nbbasket'})
 rows = basket_table.find_all('tr')
 for row in rows:
     cells = row.find_all('td')
+    n = 0
+    position = ""
+    jmnr = ""
+    prod = ""
+    vk_price = ""
+    discount = ""
+    ek_price = ""
     for cell in cells:
+
+        n = n + 1
         cell = str(cell.text.strip())
-        if re.match("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cell):
+
+        if n == 1:
+            position = str(cell)
+        elif n == 6:
             search = re.search("([0-9]{3}).([0-9]{2}).([0-9]{2})#w1wkg", cell)
             cell = search.group(1) + "." + search.group(2) + "." + search.group(3)
-        if re.match("[^0-9]+([0-9,]+)", cell):
+            jmnr = str(cell)
+        elif n == 7:
+            prod = str(cell)
+        elif n == 9:
             search = re.search("[^0-9]+([0-9,]+)", cell)
             cell = search.group(1)
-        basket_products.append(cell)
-    if re.match("\[\'[0-9]+\',.*", str(basket_products)):
-        print(str(basket_products))
-        basket.append(basket)
-    basket_products = []
+            vk_price = str(cell)
+        elif n == 10:
+            discount = str(cell)
+        elif n == 12:
+            search = re.search("[^0-9]+([0-9,]+)", cell)
+            cell = search.group(1)
+            ek_price = str(cell)
 
-print(basket)
-
-
+    information = position + " | " + jmnr + " | " + prod + " | " + vk_price + " | " + discount + " | " + ek_price
+    print(information)
 # Warenkorb leeren

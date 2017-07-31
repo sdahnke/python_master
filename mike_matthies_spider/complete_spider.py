@@ -1,6 +1,7 @@
 import csv
 import re
 import time
+
 from bs4 import BeautifulSoup
 from robobrowser import RoboBrowser
 
@@ -23,7 +24,7 @@ bez_list = list()
 pic_list = list()
 car_list = list()
 
-csv_name = 'cross_enduro_matthies.csv'
+csv_name = 'shop.csv'
 
 
 # Login-Funktion implementieren
@@ -46,7 +47,7 @@ category_links = list(set(category_links))
 
 # sammle Kategorie-Links
 for category_link in category_links:
-    if re.search(".*Enduro.*", str(category_link)):
+    if re.search(".*Bremse.*", str(category_link)):
         print(str(category_link['href']))
         category_list.append(str(category_link['href']))
 
@@ -104,15 +105,18 @@ for prod_link in prod_link_list:
     try:
         id_prod = soup.find('div', {'class': 'tooltips_text breit150'})
         id_prod = id_prod.text
-        print(id_prod)
+        search = re.search("Artikel.([0-9\.]+).*", str(id_prod))
+        jmnr = search.group(1)
+        print(jmnr + " | " + id_prod)
     except:
         id_prod = "cant find id_prod"
         print(id_prod)
 
     try:
-        categorie = soup.find('ul', {'id':'details_productebenen'})
-        for cat in categorie.find_all('li'):
-            cat_list.append(cat.text)
+        cat_list = []
+        # categorie = soup.find('ul', {'id':'details_productebenen'})
+        # for cat in categorie.find_all('li'):
+        #    cat_list.append(cat.text)
         # print(cat_list)
     except:
         cat = "can not find cat_list"
@@ -177,7 +181,9 @@ for prod_link in prod_link_list:
     try:
         with open(str(csv_name), 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_ALL)
-            writer.writerow([id_prod, cat_list, verfügbar, beschreibung, bez_list, pic_list, car_list])
+            writer.writerow([str(jmnr).strip(), str(id_prod).strip(), str(cat_list).strip(), str(verfügbar).strip(),
+                             str(beschreibung).strip(), str(bez_list).strip(), str(pic_list).strip(),
+                             str(car_list).strip()])
     except:
         print("can not write row to file")
 

@@ -1,3 +1,4 @@
+import csv
 import re
 
 from bs4 import BeautifulSoup
@@ -60,4 +61,10 @@ for row in rows:
 
     information = position + " | " + jmnr + " | " + prod + " | " + vk_price + " | " + discount + " | " + ek_price
     print(information)
+
+    if jmnr != "":
+        with open("basket.csv", 'a', newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_ALL)
+            writer.writerow([jmnr, prod, vk_price, discount, ek_price])
+
 # Warenkorb leeren

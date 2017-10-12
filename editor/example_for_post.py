@@ -8,7 +8,7 @@ from splinter import Browser
 def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price, plz, street, company, phone):
     url = "https://www.ebay-kleinanzeigen.de/p-anzeige-aufgeben.html#?path=210/306/teile&isParent=false"
     browser = Browser('chrome')
-    browser.driver.set_window_size(1400, 1400)
+    browser.driver.set_window_size(1400, 1900)
     browser.visit(url)
     browser.fill('loginMail', login_name)
     browser.fill('password', login_pw)
@@ -49,5 +49,9 @@ def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price
     browser.quit()
 
 
-ebay_kleinanzeigen("steffen_info@hotmail.com", "online24", 'Titel der Anzeige', 'C:\\Bild.JPG', 'Anzeigentext', '100',
+ebay_kleinanzeigen('steffen_info@hotmail.com', 'online24',
+                   """komplett Kit orange für KTM SX 125 2T Baujahr 2010 - 2010""",
+                   'D:\\pentaho\\workspace\\python_to_eshop\\pics\\500_7165376.jpg', """Ich verkaufe auf diesen Weg folgendes Produkt: 
+ Komplett Kit von Polisport  Inhalt:- Schutzblech vorne (orange)- Schutzblech hinten (orange)- Kühlerabdeckung (schwarz)- Startnummerntafel (orange)
+ Versand ist für 5,90 Euro möglich, Paypal ist kein Problem.""", '99',
                    '22926', '', 'Steffen', '')

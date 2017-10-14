@@ -1,13 +1,12 @@
-import re
 import time
 
-import pywinauto
 from splinter import Browser
 
 
 def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price, plz, street, company, phone):
     url = "https://www.ebay-kleinanzeigen.de/p-anzeige-aufgeben.html#?path=210/306/teile&isParent=false"
-    browser = Browser('chrome')
+    # browser = Browser('chrome', headless = True)
+    browser = Browser('phantomjs')
     browser.driver.set_window_size(1400, 1900)
     browser.visit(url)
     browser.fill('loginMail', login_name)
@@ -21,23 +20,23 @@ def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price
     browser.fill('description', description)
     browser.fill('priceAmount', price)
     browser.find_by_id("priceType2").click()
-    browser.find_by_id('pictureupload-pickfiles').click()
-    time.sleep(2)
-    apps = pywinauto.findwindows.find_elements(title_re='Öffnen')
-    for app in apps:
-        print(app)
-        prozess = re.search('.+#([0-9]+)', str(app))
-        prozess = int(prozess.group(1))
-        print(prozess)
-        app = pywinauto.Application().connect(title='Öffnen')
-        # app = pywinauto.Application().connect(process=prozess)
-        window = app.Dialog
-        window.Wait('ready')
-        edit = window.Edit
-        edit.ClickInput()
-        edit.TypeKeys(pic_path)
-        button = window.Button
-        button.Click()
+    # browser.find_by_id('pictureupload-pickfiles').click()
+    browser.driver.find_element_by_id('pictureupload-pickfiles').send_keys(pic_path)
+    # apps = pywinauto.findwindows.find_elements(title_re='Öffnen')
+    # for app in apps:
+    #    print(app)
+    #    prozess = re.search('.+#([0-9]+)', str(app))
+    #    prozess = int(prozess.group(1))
+    #    print(prozess)
+    #    app = pywinauto.Application().connect(title='Öffnen')
+    #    # app = pywinauto.Application().connect(process=prozess)
+    #    window = app.Dialog
+    #    window.Wait('ready')
+    #    edit = window.Edit
+    #    edit.ClickInput()
+    #    edit.TypeKeys(pic_path)
+    #    button = window.Button
+    #    button.Click()
     time.sleep(30)
     browser.fill('zipCode', plz)
     browser.fill('streetName', street)

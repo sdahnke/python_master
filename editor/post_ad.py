@@ -8,7 +8,7 @@ from splinter import Browser
 def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price, plz, street, company, phone):
     url = "https://www.ebay-kleinanzeigen.de/p-anzeige-aufgeben.html#?path=210/306/teile&isParent=false"
     browser = Browser('chrome')
-    browser.driver.set_window_size(1400, 1400)
+    browser.driver.set_window_size(1200, 900)
     browser.visit(url)
     browser.fill('loginMail', login_name)
     browser.fill('password', login_pw)
@@ -20,11 +20,8 @@ def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price
     browser.fill('title', title)
     browser.fill('description', description)
     browser.fill('priceAmount', price)
-    element = browser.driver.find_element_by_id('priceType2')
-    element.location_once_scrolled_into_view
     browser.find_by_id("priceType2").click()
-    element = browser.driver.find_element_by_id('pictureupload-pickfiles')
-    element.location_once_scrolled_into_view
+    browser.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/4);")
     browser.find_by_id('pictureupload-pickfiles').click()
     time.sleep(2)
     apps = pywinauto.findwindows.find_elements(title_re='Öffnen')

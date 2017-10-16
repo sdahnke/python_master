@@ -20,7 +20,11 @@ def ebay_kleinanzeigen(login_name, login_pw, title, pic_path, description, price
     browser.fill('title', title)
     browser.fill('description', description)
     browser.fill('priceAmount', price)
+    element = browser.driver.find_element_by_id('priceType2')
+    element.location_once_scrolled_into_view
     browser.find_by_id("priceType2").click()
+    element = browser.driver.find_element_by_id('pictureupload-pickfiles')
+    element.location_once_scrolled_into_view
     browser.find_by_id('pictureupload-pickfiles').click()
     time.sleep(2)
     apps = pywinauto.findwindows.find_elements(title_re='Öffnen')
